@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='6' fill='%231F3D33'/%3E%3Cpath d='M6 13 L14 7 L22 13 V22 H6 Z' fill='none' stroke='%23E9C77F' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:title" content="Still Your Agent">
+<meta property="og:description" content="Done-for-you past-client follow-up for solo real estate agents. You approve and send. You make the calls.">
+<meta property="og:type" content="website">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Still Your Agent</title>
+<meta name="description" content="Done-for-you past-client follow-up for solo real estate agents. A monthly check-in email in your voice, home anniversary notes, a local market video, and a list of who to call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column with a split hero (promise left, the actual monthly deliverables stacked right as paper slips), then plain sections that walk from the problem to the price to the start. */
+:root {
+  --paper: #F2F4F0;
+  --sheet: #FFFFFF;
+  --ink: #15211D;
+  --ink-soft: #4A5C55;
+  --rule: #D5DCD6;
+  --brass: #8A5A0B;
+  --brass-fill: #E9C77F;
+  --pine: #1F3D33;
+  --pine-ink: #EEF3EF;
+  --shadow: 0 1px 2px rgba(21,33,29,.06), 0 8px 24px rgba(21,33,29,.08);
+  --f-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1613; --sheet: #16211D; --ink: #E4EBE6; --ink-soft: #A3B3AC; --rule: #2A3833;
+    --brass: #E2AE52; --brass-fill: #6B4A12; --pine: #1B332B; --pine-ink: #E4EBE6;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E1613; --sheet: #16211D; --ink: #E4EBE6; --ink-soft: #A3B3AC; --rule: #2A3833;
+  --brass: #E2AE52; --brass-fill: #6B4A12; --pine: #1B332B; --pine-ink: #E4EBE6;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+p { margin: 0; }
+a { color: var(--brass); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; border-radius: 4px; }
+.label {
+  font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft);
+}
+.measure { max-width: 62ch; }
+section { padding-block: clamp(48px, 7vw, 88px); border-top: 1px solid var(--rule); }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+
+/* Top bar */
+.top { padding-block: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.mark { font-family: var(--f-display); font-size: 1.2rem; display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+.mark svg { flex: none; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer;
+  font: 600 .95rem/1 var(--f-body); padding: 14px 20px; border-radius: 999px; border: 1px solid transparent;
+  background: var(--pine); color: var(--pine-ink); transition: transform .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 64px); align-items: center; padding-block: clamp(32px, 6vw, 72px) clamp(48px, 7vw, 88px); }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: var(--step-3); }
+.hero .lede { font-size: var(--step-1); color: var(--ink-soft); line-height: 1.5; }
+.hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.founding-note { font-size: .95rem; color: var(--ink-soft); }
+.founding-note strong { color: var(--ink); }
+
+.slips { position: relative; display: grid; gap: 16px; }
+.slip { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); padding: 20px 22px; }
+.slip .label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.slip.note { transform: rotate(-1.2deg); }
+.slip.note p { font-size: 1rem; }
+.slip.note .sig { margin-top: 10px; color: var(--ink-soft); font-size: .95rem; }
+.slip.report { transform: rotate(.8deg); margin-left: clamp(0px, 4vw, 40px); }
+.ledger { width: 100%; border-collapse: collapse; font-family: var(--f-mono); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.ledger td { padding: 6px 0; border-top: 1px dashed var(--rule); vertical-align: top; }
+.ledger td:last-child { text-align: right; color: var(--brass); white-space: nowrap; padding-left: 12px; }
+.sample-tag { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--brass); }
+
+/* Gap stat */
+.gap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.gap .fig { font-family: var(--f-display); font-size: clamp(3rem, 2rem + 4vw, 5rem); line-height: 1; color: var(--ink); }
+.gap .fig.low { color: var(--brass); }
+.gap p { color: var(--ink-soft); max-width: 34ch; }
+.bar { height: 10px; border-radius: 999px; background: var(--rule); overflow: hidden; margin-block: 14px; }
+.bar span { display: block; height: 100%; background: var(--pine); }
+.bar.low span { background: var(--brass); }
+.cite { font-size: .85rem; color: var(--ink-soft); margin-top: 24px; }
+
+/* Monthly deliverables */
+.deliver { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: 32px; border-top: 1px solid var(--rule); }
+.item { padding: 24px 24px 24px 0; border-bottom: 1px solid var(--rule); display: grid; gap: 10px; align-content: start; }
+.item:nth-child(even) { padding-left: 24px; padding-right: 0; border-left: 1px solid var(--rule); }
+.split { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: .95rem; }
+.split dt { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); padding-top: 3px; }
+.split dd { margin: 0; }
+
+/* Setup steps */
+.steps { list-style: none; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: "Day " counter(s); font-family: var(--f-mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--brass); border-top: 2px solid var(--brass); padding-top: 10px; }
+.steps li:nth-child(1)::before { content: "Day 1"; }
+.steps li:nth-child(2)::before { content: "Days 2 to 3"; }
+.steps li:nth-child(3)::before { content: "Days 4 to 5"; }
+.steps li:nth-child(4)::before { content: "Day 7"; }
+.steps p { color: var(--ink-soft); font-size: .98rem; }
+
+/* Pricing */
+.prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.price { border: 1px solid var(--rule); border-radius: 8px; padding: 28px; display: grid; gap: 14px; align-content: start; background: var(--sheet); }
+.price.founding { background: var(--pine); color: var(--pine-ink); border-color: var(--pine); }
+.price.founding .label, .price.founding .muted { color: color-mix(in srgb, var(--pine-ink) 72%, transparent); }
+.amount { font-family: var(--f-display); font-size: 3rem; line-height: 1; }
+.amount small { font-family: var(--f-body); font-size: 1rem; }
+.price ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.muted { color: var(--ink-soft); }
+.pill { justify-self: start; font-family: var(--f-mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; background: var(--brass-fill); color: var(--ink); padding: 5px 10px; border-radius: 999px; }
+.price.founding .pill { color: #15211D; background: #E9C77F; }
+.math { margin-top: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; font-variant-numeric: tabular-nums; }
+.math div { border-top: 1px solid var(--rule); padding-top: 14px; display: grid; gap: 4px; }
+.math strong { font-family: var(--f-display); font-weight: 400; font-size: 1.75rem; }
+
+/* Fit */
+.fit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 32px; }
+.fit ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.fit li { padding-left: 26px; position: relative; }
+.fit li::before { content: ""; position: absolute; left: 0; top: .6em; width: 12px; height: 2px; background: var(--pine); }
+.fit .no li::before { background: var(--ink-soft); width: 10px; }
+.fit .no li { color: var(--ink-soft); }
+
+/* FAQ */
+.faq { margin-top: 24px; border-top: 1px solid var(--rule); }
+.faq details { border-bottom: 1px solid var(--rule); padding-block: 18px; }
+.faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); color: var(--brass); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 10px; color: var(--ink-soft); max-width: 62ch; }
+
+/* Start */
+.start { background: var(--pine); color: var(--pine-ink); border-top: 0; }
+.start .label { color: color-mix(in srgb, var(--pine-ink) 70%, transparent); }
+.start-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.start-grid > * { min-width: 0; }
+.email-box { background: color-mix(in srgb, var(--pine-ink) 8%, transparent); border: 1px solid color-mix(in srgb, var(--pine-ink) 22%, transparent); border-radius: 8px; padding: 24px; display: grid; gap: 14px; }
+.email { font-family: var(--f-mono); font-size: clamp(.95rem, .8rem + .6vw, 1.15rem); user-select: all; word-break: break-all; }
+.email-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.start .btn { background: #E9C77F; color: #15211D; }
+.start .btn.ghost { background: transparent; color: var(--pine-ink); border-color: color-mix(in srgb, var(--pine-ink) 35%, transparent); }
+.start ol { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.copied { font-size: .9rem; min-height: 1.4em; }
+
+footer { padding-block: 28px; font-size: .85rem; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .hero, .start-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .math { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .gap, .deliver, .prices, .fit, .steps { grid-template-columns: 1fr; }
+  .item, .item:nth-child(even) { padding-left: 0; padding-right: 0; border-left: 0; }
+  .slip.report { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#top" aria-label="Still Your Agent, top of page">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+        <path d="M4 13 L14 5 L24 13 V24 H4 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="14" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M14 19 V23" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Still Your Agent
+    </a>
+    <a class="btn ghost" href="#start">Claim a founding spot</a>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="stack" style="gap:24px">
+        <span class="label">Past-client follow-up for solo agents</span>
+        <h1>Your past clients would hire you again. Most of them forget to.</h1>
+        <p class="lede">Every month I write a check-in email in your voice, a note for every client whose home anniversary is coming up, and a short local market video. Then I tell you who replied and who mentioned moving. You approve and send. You make the calls.</p>
+        <div class="actions">
+          <a class="btn" href="#start">Claim a founding spot</a>
+          <a class="btn ghost" href="#price">See the price</a>
+        </div>
+        <p class="founding-note"><strong>2 founding spots:</strong> $250 a month, setup free, month to month.</p>
+      </div>
+
+      <div class="slips" aria-label="Samples of the monthly work">
+        <div class="slip note">
+          <div class="label"><span>Anniversary note</span><span class="sample-tag">Sample</span></div>
+          <p>Hi Dana, three years ago this week you got the keys to the Maple Street house. Hope the garden finally came in the way you wanted. If you ever want to know what it's worth now, I'm happy to pull the numbers.</p>
+          <p class="sig">Sent by you, from your phone</p>
+        </div>
+        <div class="slip report">
+          <div class="label"><span>November report</span><span class="sample-tag">Sample</span></div>
+          <table class="ledger">
+            <tbody>
+              <tr><td>Check-in email sent to</td><td>412</td></tr>
+              <tr><td>Anniversary notes</td><td>9</td></tr>
+              <tr><td>Replies</td><td>14</td></tr>
+              <tr><td>D. Reyes: thinking of selling in spring</td><td>Call</td></tr>
+              <tr><td>J. Okafor: sister moving to town</td><td>Call</td></tr>
+              <tr><td>M. Chen: asked about refinancing</td><td>Call</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <section aria-labelledby="gap-h">
+      <span class="label">The gap</span>
+      <h2 id="gap-h" class="measure" style="margin-top:12px">Clients say they will come back. Few of them do.</h2>
+      <div class="gap">
+        <div>
+          <div class="fig">91%</div>
+          <div class="bar" aria-hidden="true"><span style="width:91%"></span></div>
+          <p>of buyers say they would use their agent again or recommend them.</p>
+        </div>
+        <div>
+          <div class="fig low">15 to 18%</div>
+          <div class="bar low" aria-hidden="true"><span style="width:17%"></span></div>
+          <p>of buyers actually went back to an agent they had worked with before.</p>
+        </div>
+      </div>
+      <p class="cite measure">Source: NAR 2025 Profile of Home Buyers and Sellers, as summarized by <a href="https://virginiarealtors.org/2025/12/08/key-takeaways-from-nars-2025-profile-of-home-buyers-and-sellers" target="_blank" rel="noopener">Virginia Realtors</a>. Reported figures for repeat use vary between 15% and 18%. The usual reason is simple: the client lost touch, and another agent was there first.</p>
+    </section>
+
+    <section aria-labelledby="month-h">
+      <span class="label">Every month</span>
+      <h2 id="month-h" class="measure" style="margin-top:12px">Four things land in your shared folder each month.</h2>
+      <div class="deliver">
+        <div class="item">
+          <h3>Check-in email</h3>
+          <dl class="split">
+            <dt>I do</dt><dd>Write one email in your voice. Useful, short, never a sales pitch.</dd>
+            <dt>You do</dt><dd>Read it, approve it, send it to your list from your own email or CRM.</dd>
+          </dl>
+        </div>
+        <div class="item">
+          <h3>Home anniversary notes</h3>
+          <dl class="split">
+            <dt>I do</dt><dd>Write a short personal note for each client whose closing anniversary falls that month.</dd>
+            <dt>You do</dt><dd>Send each one from your phone. Takes a minute apiece.</dd>
+          </dl>
+        </div>
+        <div class="item">
+          <h3>Local market video</h3>
+          <dl class="split">
+            <dt>I do</dt><dd>Edit one 60-second video on your local market from public numbers.</dd>
+            <dt>You do</dt><dd>Post it or send it. Your face is optional.</dd>
+          </dl>
+        </div>
+        <div class="item">
+          <h3>One-page report</h3>
+          <dl class="split">
+            <dt>I do</dt><dd>List who replied and who mentioned buying, selling, or a friend who is.</dd>
+            <dt>You do</dt><dd>Call those people. That is where the deals come from.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="setup-h">
+      <span class="label">Setup, first week</span>
+      <h2 id="setup-h" class="measure" style="margin-top:12px">One week to get your list ready. Then the monthly rhythm starts.</h2>
+      <ol class="steps">
+        <li><h3>You upload your list</h3><p>Export your past clients and sphere from your CRM or phone as a CSV, and drop it in the shared Google Drive folder.</p></li>
+        <li><h3>I clean it</h3><p>Duplicates removed, missing closing dates filled, every contact tagged as past client or sphere.</p></li>
+        <li><h3>I learn your voice</h3><p>You share 3 to 5 emails or texts you have sent clients. Everything I write sounds like those.</p></li>
+        <li><h3>Your calendar is set</h3><p>Every home anniversary for the year, mapped from closing dates, so no client gets missed.</p></li>
+      </ol>
+    </section>
+
+    <section id="price" aria-labelledby="price-h">
+      <span class="label">Price</span>
+      <h2 id="price-h" class="measure" style="margin-top:12px">One fixed monthly price. Cancel any month.</h2>
+      <div class="prices">
+        <div class="price founding">
+          <span class="pill">2 spots</span>
+          <span class="label">Founding clients</span>
+          <div class="amount">$250 <small>a month</small></div>
+          <ul>
+            <li>Setup free (normally $250)</li>
+            <li>Everything in the monthly package</li>
+            <li>Month to month</li>
+          </ul>
+          <p class="muted">In return: a short testimonial if you are happy, and a 90-day check together on replies and leads.</p>
+        </div>
+        <div class="price">
+          <span class="label">Standard</span>
+          <div class="amount">$350 <small>a month</small></div>
+          <ul>
+            <li>$250 one-time setup</li>
+            <li>Everything in the monthly package</li>
+            <li>Month to month</li>
+          </ul>
+          <p class="muted">The price after the founding spots are filled.</p>
+        </div>
+      </div>
+      <div class="math">
+        <div><span class="label">One side, typical Realtor</span><strong>About $5,800</strong><span class="muted">$58,100 median gross over 10 sides in 2024 (<a href="https://www.nar.realtor/press-releases/realtors-show-strong-commitment-to-profession-amid-market-headwinds-new-nar-report-finds" target="_blank" rel="noopener">NAR</a>)</span></div>
+        <div><span class="label">A year at the standard price</span><strong>$4,200</strong><span class="muted">$350 a month for 12 months</span></div>
+        <div><span class="label">To break even</span><strong>1 deal a year</strong><span class="muted">One repeat or referral side covers the whole year.</span></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="fit-h">
+      <span class="label">Who it fits</span>
+      <h2 id="fit-h" class="measure" style="margin-top:12px">Built for agents who work alone and have a list they never get to.</h2>
+      <div class="fit">
+        <div>
+          <h3>A good fit</h3>
+          <ul>
+            <li>You work solo, with no team or assistant.</li>
+            <li>You have been in the business 5 years or more.</li>
+            <li>You have 200 to 1,000 past clients and sphere contacts.</li>
+            <li>You close about 8 to 20 deals a year.</li>
+          </ul>
+        </div>
+        <div class="no">
+          <h3>Not a fit</h3>
+          <ul>
+            <li>You want cold calling or bought leads.</li>
+            <li>You need someone on live calls during your workday.</li>
+            <li>You already have a team member doing past-client follow-up.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq-h">
+      <span class="label">Questions</span>
+      <h2 id="faq-h" style="margin-top:12px">Before you start</h2>
+      <div class="faq">
+        <details>
+          <summary>Do you contact my clients?</summary>
+          <p>No. You send everything, from your own email, CRM, and phone. Your clients only ever hear from you.</p>
+        </details>
+        <details>
+          <summary>Do you need my CRM login?</summary>
+          <p>No. You export your list and upload it to a shared Google Drive folder. I never ask for passwords.</p>
+        </details>
+        <details>
+          <summary>Will it sound like me?</summary>
+          <p>I write from 3 to 5 messages you have already sent clients. You approve every piece before it goes out, and you can edit anything.</p>
+        </details>
+        <details>
+          <summary>How much of my time does it take?</summary>
+          <p>About 30 minutes a month to read, approve, and send, plus the calls you choose to make from the report.</p>
+        </details>
+        <details>
+          <summary>Do we need to get on calls?</summary>
+          <p>No. The work runs through the shared folder and email. If you want a quick video walkthrough of the first month, I can record one.</p>
+        </details>
+        <details>
+          <summary>What if I want to stop?</summary>
+          <p>Tell me before your next month starts. There is no contract, and your cleaned list and anniversary calendar stay yours.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+</div>
+
+<section id="start" class="start" aria-labelledby="start-h">
+  <div class="wrap start-grid">
+    <div class="stack" style="gap:20px">
+      <span class="label">Start</span>
+      <h2 id="start-h" style="font-size:var(--step-3)">Claim one of the 2 founding spots.</h2>
+      <p>Email me with these three things, and I will reply with your shared folder and what to upload first.</p>
+      <ol>
+        <li>Your name and the area you sell in</li>
+        <li>About how many past clients and sphere contacts you have</li>
+        <li>The CRM you use, or "spreadsheet" or "phone"</li>
+      </ol>
+    </div>
+    <div class="email-box">
+      <span class="label">Email</span>
+      <span class="email" id="email">mlawrencelindo@gmail.com</span>
+      <div class="email-actions">
+        <button class="btn" type="button" id="copy">Copy address</button>
+        <a class="btn ghost" href="mailto:mlawrencelindo@gmail.com?subject=Founding%20spot">Open in my email app</a>
+      </div>
+      <p class="copied" id="copied" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>Still Your Agent. Past-client follow-up for solo real estate agents.</span>
+    <span>Samples on this page use made-up names.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy');
+  var out = document.getElementById('copied');
+  var addr = document.getElementById('email');
+  function selectAddr() {
+    var r = document.createRange(); r.selectNodeContents(addr);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  btn.addEventListener('click', function () {
+    var text = addr.textContent.trim();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        out.textContent = 'Copied. Paste it into a new email.';
+      }, function () {
+        selectAddr(); out.textContent = 'Address selected. Press Ctrl+C or Cmd+C to copy.';
+      });
+    } else {
+      selectAddr(); out.textContent = 'Address selected. Press Ctrl+C or Cmd+C to copy.';
+    }
+  });
+})();
+</script>
+</body>
+</html>
