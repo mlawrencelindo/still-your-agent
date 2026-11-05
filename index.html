@@ -144,6 +144,19 @@
   .report .call td:last-child { color: var(--navy); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; }
   .report tr:last-child td { border-bottom: 0; }
 
+  /* Video sample */
+  .video-sample { margin-top: 3.5rem; }
+  .video-meta { font-size: .95rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .frames { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .frame { aspect-ratio: 9 / 16; border-radius: .6rem; padding: 1rem; display: flex; flex-direction: column; color: #fff; background: linear-gradient(165deg, var(--navy) 0%, var(--navy-dark) 100%); overflow: hidden; }
+  .frame-time { font: 600 .7rem/1 var(--sans); letter-spacing: .06em; color: rgba(255, 255, 255, .78); font-variant-numeric: tabular-nums; }
+  .frame-kicker { margin-top: auto; font: 600 .7rem/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .8); }
+  .frame-big { margin-top: .4rem; font-family: var(--serif); font-weight: 600; font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.2; }
+  .frame-num { margin-top: .4rem; font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1; font-variant-numeric: tabular-nums; }
+  .frame-small { margin-top: .5rem; font-size: .85rem; line-height: 1.4; color: rgba(255, 255, 255, .88); }
+  .frame-sig { margin-top: auto; padding-top: .7rem; border-top: 1px solid rgba(255, 255, 255, .2); font-size: .65rem; line-height: 1.35; color: rgba(255, 255, 255, .8); }
+  .video-foot { margin-top: 1.25rem; font-size: .9rem; color: var(--muted); max-width: 46rem; }
+
   /* Gap */
   .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
   .stat { background: var(--white); border: 1px solid var(--line); border-radius: .75rem; padding: 2rem; }
@@ -346,6 +359,9 @@
     .trust { flex-direction: column; }
     .about-grid { grid-template-columns: 1fr; gap: 1.75rem; }
     .avatar.big { width: 8.5rem; height: 8.5rem; font-size: 2.25rem; }
+    .frames { grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .frame { padding: .85rem; }
+    .frame-big { font-size: 1.05rem; }
   }
 </style>
 </head>
@@ -438,14 +454,14 @@
             <span class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M12 13.5l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2-1.45-1.4 2-.3z"/></svg></span>
             <div>
               <h3>Home anniversary notes</h3>
-              <dl class="who"><dt>I do</dt><dd>Write a short personal note for each client whose closing anniversary falls that month.</dd><dt>You do</dt><dd>Send each one from your phone. Takes a minute apiece.</dd></dl>
+              <dl class="who"><dt>I do</dt><dd>Write a short personal note for each client whose closing anniversary falls that month.</dd><dt>You do</dt><dd>Tap each note on your phone. A text opens with the note written and your client's number filled in. You hit send.</dd></dl>
             </div>
           </li>
           <li class="item reveal">
             <span class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/></svg></span>
             <div>
               <h3>Local market video</h3>
-              <dl class="who"><dt>I do</dt><dd>Edit one 60-second video on your local market from public numbers.</dd><dt>You do</dt><dd>Post it or send it. Your face is optional.</dd></dl>
+              <dl class="who"><dt>I do</dt><dd>Edit one 60-second video on your local market from public numbers.</dd><dt>You do</dt><dd>Post it or text it to your list. Your face is optional. See the sample below.</dd></dl>
             </div>
           </li>
           <li class="item reveal">
@@ -490,9 +506,46 @@
               <tr class="call"><td>M. Chen: asked about refinancing</td><td>Call</td></tr>
             </table>
           </figure>
-          <p class="side-note">About 30 minutes a month of your time, plus the calls you choose to make.</p>
+          <p class="side-note">About 30 minutes a month of your time, plus the calls you choose to make. I email you when your month is ready, and again a few days later as a reminder.</p>
         </div>
       </div>
+
+      <figure class="sample video-sample reveal" style="margin-inline:0;margin-bottom:0" aria-label="Sample market video, frame by frame">
+        <div class="sample-head">
+          <span class="sample-title">Market video, frame by frame</span>
+          <span class="tag">Sample</span>
+        </div>
+        <p class="video-meta">60 seconds, vertical, made for Reels, Shorts, and texting to your list.</p>
+        <ol class="frames">
+          <li class="frame">
+            <span class="frame-time">0:00</span>
+            <span class="frame-kicker">Maple Grove &middot; Fall market</span>
+            <span class="frame-big">Homes here are selling a week faster.</span>
+            <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty</span>
+          </li>
+          <li class="frame">
+            <span class="frame-time">0:12</span>
+            <span class="frame-kicker">Days on market</span>
+            <span class="frame-num">24</span>
+            <span class="frame-small">on average this fall. Last fall it was 31.</span>
+            <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty</span>
+          </li>
+          <li class="frame">
+            <span class="frame-time">0:30</span>
+            <span class="frame-kicker">Median sale price</span>
+            <span class="frame-num">$412K</span>
+            <span class="frame-small">up 3% from a year ago.</span>
+            <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty</span>
+          </li>
+          <li class="frame">
+            <span class="frame-time">0:50</span>
+            <span class="frame-kicker">Your home</span>
+            <span class="frame-big">Wondering what yours is worth now? Text me.</span>
+            <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty &middot; Lic. #01234567</span>
+          </li>
+        </ol>
+        <p class="video-foot">Your name and brokerage on every frame, and your license on the last. Text and music by default, or add your own voiceover or a clip of you. Numbers come from the Redfin Data Center, with sources listed in your folder.</p>
+      </figure>
     </div>
   </section>
 
@@ -619,6 +672,10 @@
         <details>
           <summary>I already have Homebot or my CRM's drip emails. Why add this?<span class="plus" aria-hidden="true"></span></summary>
           <div class="answer">Those tools send the same automated email to everyone. This is written in your voice, includes a personal note for each home anniversary, and comes with a person reading the replies and telling you who to call. It works fine alongside them.</div>
+        </details>
+        <details>
+          <summary>Can't I just use ChatGPT for this?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">You can use it to write an email. The writing was never the hard part. The hard part is a clean list, knowing whose anniversary is this month, doing it every single month, and reading the replies to spot who wants to move. That is what you pay for. I use AI tools to work faster, and I check every word and every number myself before anything reaches you.</div>
         </details>
         <details>
           <summary>Will this follow my brokerage and state rules?<span class="plus" aria-hidden="true"></span></summary>
