@@ -1,42 +1,109 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#1f3a5f">
 <title>Your Month</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f3a5f'/%3E%3Ctext x='16' y='22.5' font-family='Georgia,serif' font-size='18' font-weight='700' fill='%23fff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
 <style>
-body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f6f7f9;color:#1d2330}
-main{max-width:560px;margin:0 auto;padding:20px 16px 40px}
-h1{font-size:22px;margin:0 0 4px}.sub{color:#5a6475;margin:0 0 20px}
-h2{font-size:16px;margin:28px 0 10px;text-transform:uppercase;letter-spacing:.04em;color:#5a6475}
-.card{background:#fff;border:1px solid #e1e4ea;border-radius:10px;padding:14px;margin-bottom:12px}
-.name{font-weight:600}.note{margin:8px 0 12px;line-height:1.45}
-a.btn,button{display:block;width:100%;box-sizing:border-box;text-align:center;background:#1a73e8;color:#fff;text-decoration:none;padding:13px;border:0;border-radius:8px;font-weight:600;font-size:16px;margin-top:8px}
-a.alt{background:#fff;color:#1a73e8;border:1px solid #1a73e8;font-weight:500}
-.test{font-size:13px;color:#5a6475;margin-top:10px}
-table{width:100%;border-collapse:collapse;background:#fff}td,th{border:1px solid #e1e4ea;padding:8px;text-align:left;font-size:14px}
-.warn{background:#fff6dd;border:1px solid #f0d58a;padding:10px;border-radius:8px;font-size:14px}
-.pin{max-width:280px;margin:60px auto 0;text-align:center}
-.pin input{width:100%;box-sizing:border-box;font-size:28px;letter-spacing:.5em;text-align:center;padding:12px;border:1px solid #c8cdd6;border-radius:8px}
-.err{color:#c5221f;min-height:20px;margin-top:10px;font-size:14px}
-</style></head><body><main id="app"></main>
+:root{--ink:#17202b;--muted:#5b6574;--navy:#1f3a5f;--navy-soft:#e8edf4;--band:#f6f4f0;--line:#e2ded7;--paper:#fffdf8;--card:#fff;--ok:#2e6b4a;--ok-soft:#e6f1ea;--warn:#fff6dd;--warn-line:#f0d58a;--err:#b3261e;
+ --serif:"Source Serif 4",Georgia,"Times New Roman",serif;--sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root{--ink:#e9edf2;--muted:#9aa5b4;--navy:#8fb0d8;--navy-soft:#1e2a3a;--band:#12171e;--line:#2a323d;--paper:#1a2029;--card:#1a2029;--ok:#7fc39b;--ok-soft:#18291f;--warn:#2d2715;--warn-line:#6b5a24;--err:#f2867e;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--band);color:var(--ink);font-family:var(--sans);font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+main{max-width:36rem;margin:0 auto;padding:max(1rem,env(safe-area-inset-top)) 1rem calc(3rem + env(safe-area-inset-bottom))}
+h1,h2{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.15;margin:0}
+.top{display:flex;align-items:center;gap:.55rem;font-family:var(--serif);font-weight:600;font-size:1rem;padding:.25rem 0 1.5rem}
+.mark{width:1.75rem;height:1.75rem;border-radius:.4rem;background:#1f3a5f;color:#fff;display:grid;place-items:center;font-size:1rem}
+.top .for{margin-left:auto;font-family:var(--sans);font-weight:500;font-size:.85rem;color:var(--muted)}
+.eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 .35rem}
+h1{font-size:2.4rem}
+.lede{color:var(--muted);margin:.5rem 0 1.25rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.5rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:.75rem;padding:.8rem .75rem}
+.stat b{display:block;font-family:var(--serif);font-weight:600;font-size:1.9rem;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:.8rem;color:var(--muted);margin-top:.35rem;line-height:1.3}
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:2.25rem 0 .85rem}
+.sec h2{font-size:1.35rem}.sec small{color:var(--muted);font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:.9rem;padding:1.1rem;margin-bottom:.85rem;transition:opacity .2s}
+.who{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+.name{font-weight:600;font-size:1.05rem}
+.why{font-size:.85rem;color:var(--muted)}
+.chip{flex:none;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:.2rem .5rem;border-radius:99rem;background:var(--navy-soft);color:var(--navy)}
+.letter{font-family:var(--serif);font-size:1.08rem;line-height:1.55;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--navy);border-radius:.5rem;padding:.85rem 1rem;margin:.85rem 0}
+.subj{display:block;font-family:var(--sans);font-size:.8rem;color:var(--muted);margin-bottom:.35rem}
+.acts{display:flex;flex-wrap:wrap;gap:.5rem}
+.btn{flex:1 1 9rem;display:flex;align-items:center;justify-content:center;gap:.45rem;min-height:3rem;padding:.7rem 1rem;border-radius:.6rem;font:600 1rem var(--sans);text-decoration:none;cursor:pointer;border:1px solid var(--navy);background:#1f3a5f;color:#fff;transition:transform .15s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;color:var(--navy)}
+.btn svg{width:1.1rem;height:1.1rem;flex:none}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.75rem;padding-top:.7rem;border-top:1px dashed var(--line)}
+.tiny{background:none;border:0;padding:.35rem 0;font:500 .875rem var(--sans);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:.4rem}
+.tiny input{width:1.1rem;height:1.1rem;accent-color:#2e6b4a;margin:0}
+.card.done{opacity:.6}.card.done .letter{border-left-color:var(--ok)}
+.card.done .chip{background:var(--ok-soft);color:var(--ok)}
+.none{font-size:.875rem;color:var(--err);margin:0}
+.row{display:flex;gap:.75rem;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:.75rem;padding:.85rem 1rem;margin-bottom:.5rem}
+.row .said{color:var(--muted);font-size:.925rem}
+.row .chip{margin-left:auto}
+.row.call{border-color:var(--navy);box-shadow:inset 3px 0 0 var(--navy)}
+.warn{background:var(--warn);border:1px solid var(--warn-line);padding:.7rem .9rem;border-radius:.6rem;font-size:.9rem;margin:0 0 1rem}
+.end{text-align:center;color:var(--muted);font-size:.85rem;margin-top:2.5rem}
+.gate{max-width:20rem;margin:12vh auto 0;text-align:center}
+.gate .mark{width:3rem;height:3rem;font-size:1.6rem;border-radius:.7rem;margin:0 auto 1.25rem;font-family:var(--serif);font-weight:600}
+.gate h1{font-size:2rem}.gate p{color:var(--muted);margin:.5rem 0 1.5rem}
+.gate .eyebrow{margin:0 0 .35rem}
+.gate input{width:100%;font:600 2rem var(--sans);letter-spacing:.6em;text-indent:.6em;text-align:center;padding:.7rem;border:1px solid var(--line);border-radius:.7rem;background:var(--card);color:var(--ink)}
+.gate input:focus,.btn:focus-visible,.tiny:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.gate .btn{width:100%;margin-top:.75rem}
+.err{color:var(--err);min-height:1.4rem;margin-top:.75rem;font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:calc(1.25rem + env(safe-area-inset-bottom));transform:translate(-50%,1rem);opacity:0;background:#17202b;color:#fff;padding:.6rem 1rem;border-radius:99rem;font-size:.9rem;transition:.2s;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:360px){h1{font-size:2rem}.stat b{font-size:1.6rem}}
+</style></head><body><main id="app"></main><div class="toast" id="toast" role="status"></div>
 <script>
-var app=document.getElementById('app'),ios=/iPhone|iPad|iPod/.test(navigator.userAgent);
-var sample={agent:"Dana (SAMPLE)",month:"November 2026",test:true,
- replies:[["Mike T.","Thinking of selling in spring","Call"],["Ana R.","Thanks for the update","No"]],
- notes:[{name:"Sarah L.",why:"3 years on Maple Street",phone:"+15555550123",
-  text:"Hi Sarah! Can you believe it's been 3 years since you got the keys to your place on Maple Street? Happy home anniversary. Hope you're still loving it. - Dana"}]};
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function link(p,t,sep){return "sms:"+p+sep+"body="+encodeURIComponent(t)}
+var app=document.getElementById('app'),ios=/iPhone|iPad|iPod/.test(navigator.userAgent),hash=location.hash.slice(1);
+var I={sms:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>',
+ mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function first(n){return String(n).split(' ')[0]}
+function sms(p,t){return 'sms:'+p+(ios?'&':'?')+'body='+encodeURIComponent(t)}
+function mail(e,s,t){return 'mailto:'+e+'?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(t)}
+function store(k,v){try{var o=JSON.parse(localStorage.getItem('sya')||'{}');if(v===undefined)return o[k];o[k]=v;localStorage.setItem('sya',JSON.stringify(o))}catch(x){}}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('on')},1800)}
+function plural(n,a,b){return n+' '+(n==1?a:b)}
+function how(n){return n.phone&&n.email?'Text or email':n.phone?'Text':n.email?'Email':'Copy'}
 function render(d){
- var mo=String(d.month).split(' ')[0],calls=d.replies.filter(function(r){return /call/i.test(r[2])}).length;document.title='Your '+mo;var h='<h1>Your '+esc(mo)+'</h1><p class="sub">Still Your Agent &middot; '+d.notes.length+(d.notes.length==1?' note':' notes')+' to send &middot; '+calls+(calls==1?' person':' people')+' to call</p><p class="sub">Tap a button, check the text, hit send.</p>';
- if(d.test)h+='<p class="warn">Test page. The number 555-555-0123 is fake. Do not send.</p>';
- h+='<h2>Anniversary notes</h2>';
- d.notes.forEach(function(n){h+='<div class="card"><div class="name">'+esc(n.name)+'</div><div class="sub" style="margin:0">'+esc(n.why)+'</div><div class="note">'+esc(n.text)+'</div>'+
-  '<a class="btn" href="'+link(n.phone,n.text,ios?'&':'?')+'">Text '+esc(n.name.split(' ')[0])+'</a>';
-  if(d.test)h+='<div class="test">Test versions:</div><a class="btn alt" href="'+link(n.phone,n.text,'?')+'">Version A</a><a class="btn alt" href="'+link(n.phone,n.text,'&')+'">Version B</a><a class="btn alt" href="'+link(n.phone,n.text,'?&')+'">Version C</a>';
-  h+='</div>'});
- h+='<h2>Who replied</h2><table><tr><th>Name</th><th>What they said</th><th>Call?</th></tr>';
- d.replies.forEach(function(r){h+='<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td></tr>'});
- app.innerHTML=h+'</table>';
+ var mo=first(d.month),notes=d.notes||[],replies=(d.replies||[]).slice(),key=hash.slice(-16),done=store(key)||{};
+ var calls=replies.filter(function(r){return /call/i.test(r[2])}).length;
+ replies.sort(function(a,b){return /call/i.test(b[2])-/call/i.test(a[2])});
+ document.title='Your '+mo;
+ var h='<div class="top"><span class="mark">S</span>Still Your Agent<span class="for">'+esc(d.agent)+'</span></div>';
+ h+='<p class="eyebrow">Monthly Packet &middot; '+esc(d.month)+'</p><h1>Your '+esc(mo)+'</h1>';
+ h+='<p class="lede">Tap a button, check the message, hit send. Tick each one off as you go.</p>';
+ if(d.test)h+='<p class="warn">Test packet. The contacts here are fake. Do not send.</p>';
+ h+='<div class="stats"><div class="stat"><b id="left">'+notes.length+'</b><span>notes left to send</span></div><div class="stat"><b>'+calls+'</b><span>'+(calls==1?'person':'people')+' to call</span></div><div class="stat"><b>'+replies.length+'</b><span>'+(replies.length==1?'reply':'replies')+' this month</span></div></div>';
+ h+='<div class="sec"><h2>Anniversary notes</h2><small>'+plural(notes.length,'note','notes')+'</small></div>';
+ notes.forEach(function(n,i){
+  var subj=n.subject||'Happy home anniversary, '+first(n.name)+'!',acts='';
+  if(n.phone)acts+='<a class="btn" href="'+esc(sms(n.phone,n.text))+'">'+I.sms+'Text '+esc(first(n.name))+'</a>';
+  if(n.email)acts+='<a class="btn'+(n.phone?' ghost':'')+'" href="'+esc(mail(n.email,subj,n.text))+'">'+I.mail+'Email '+esc(first(n.name))+'</a>';
+  if(!acts)acts='<p class="none">No phone or email on file for '+esc(first(n.name))+'. Copy the note and send it your usual way.</p>';
+  h+='<article class="card'+(done[i]?' done':'')+'" id="n'+i+'"><div class="who"><div><div class="name">'+esc(n.name)+'</div><div class="why">'+esc(n.why)+'</div></div><span class="chip">'+(done[i]?'Sent':how(n))+'</span></div>';
+  h+='<div class="letter">'+(n.email?'<span class="subj">Email subject: '+esc(subj)+'</span>':'')+esc(n.text)+'</div><div class="acts">'+acts+'</div>';
+  h+='<div class="foot"><label class="tiny"><input type="checkbox" data-i="'+i+'"'+(done[i]?' checked':'')+'> Sent</label><button class="tiny" type="button" data-copy="'+i+'">Copy note</button></div></article>';
+ });
+ h+='<div class="sec"><h2>Who replied</h2><small>Calls first</small></div>';
+ if(!replies.length)h+='<p class="lede">No replies this month.</p>';
+ replies.forEach(function(r){var c=/call/i.test(r[2]);h+='<div class="row'+(c?' call':'')+'"><div><div class="name">'+esc(r[0])+'</div><div class="said">&ldquo;'+esc(r[1])+'&rdquo;</div></div><span class="chip">'+(c?'Call':'No call')+'</span></div>'});
+ h+='<p class="end">Questions? Reply to your monthly email.</p>';
+ app.innerHTML=h;
+ function left(){document.getElementById('left').textContent=notes.length-Object.keys(done).filter(function(k){return done[k]}).length}
+ left();
+ app.addEventListener('change',function(ev){var i=ev.target.dataset.i;if(i==null)return;done[i]=ev.target.checked;store(key,done);var c=document.getElementById('n'+i);c.classList.toggle('done',done[i]);c.querySelector('.chip').textContent=done[i]?'Sent':how(notes[i]);left()});
+ app.addEventListener('click',function(ev){var b=ev.target.closest('[data-copy]');if(!b)return;var t=notes[b.dataset.copy].text;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast('Note copied')},function(){toast('Press and hold the note to copy it')})});
 }
 function b64(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
 async function unlock(pin,raw){
@@ -45,12 +112,12 @@ async function unlock(pin,raw){
  var key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:600000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
  return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:iv},key,ct)));
 }
-var hash=location.hash.slice(1);
-if(!hash){app.innerHTML='<div class="pin"><h1>Your Month</h1><p class="sub">Still Your Agent. Open the link from your monthly email to see your notes.</p></div>'}else{
- app.innerHTML='<form class="pin" id="f"><h1>Your Month</h1><p class="sub">Enter your 4-digit PIN</p><input id="p" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" autofocus><button type="submit">Open</button><div class="err" id="e"></div></form>';
- document.getElementById('f').addEventListener('submit',async function(ev){
-  ev.preventDefault();var e=document.getElementById('e');e.textContent='Opening...';
-  try{render(await unlock(document.getElementById('p').value,b64(hash)))}catch(x){e.textContent='That PIN did not work. Check it and try again.'}
- });
+if(!hash){app.innerHTML='<div class="gate"><div class="mark">S</div><h1>Your Month</h1><p>Open the link in your monthly Still Your Agent email to see this month\'s packet.</p></div>'}else{
+ app.innerHTML='<form class="gate" id="f"><div class="mark">S</div><p class="eyebrow">Still Your Agent</p><h1>Your Month</h1><p>Enter your 4-digit PIN to open this month\'s packet.</p><input id="p" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" aria-label="4-digit PIN" autofocus><button class="btn" type="submit">Open my packet</button><div class="err" id="e" role="alert"></div></form>';
+ var p=document.getElementById('p'),f=document.getElementById('f'),busy=false;
+ async function go(){if(busy)return;busy=true;var e=document.getElementById('e');e.textContent='Opening...';
+  try{render(await unlock(p.value,b64(hash)));scrollTo(0,0)}catch(x){e.textContent='That PIN did not work. Check it and try again.';p.value='';p.focus()}busy=false}
+ p.addEventListener('input',function(){if(p.value.length==4)go()});
+ f.addEventListener('submit',function(ev){ev.preventDefault();go()});
 }
 </script></body></html>
