@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Monthly notes</title>
+<title>Your Month</title>
 <style>
 body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f6f7f9;color:#1d2330}
 main{max-width:560px;margin:0 auto;padding:20px 16px 40px}
@@ -27,7 +27,7 @@ var sample={agent:"Dana (SAMPLE)",month:"November 2026",test:true,
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function link(p,t,sep){return "sms:"+p+sep+"body="+encodeURIComponent(t)}
 function render(d){
- var h='<h1>'+esc(d.month)+' notes for '+esc(d.agent)+'</h1><p class="sub">Tap a button, check the text, hit send.</p>';
+ var mo=String(d.month).split(' ')[0],calls=d.replies.filter(function(r){return /call/i.test(r[2])}).length;document.title='Your '+mo;var h='<h1>Your '+esc(mo)+'</h1><p class="sub">Still Your Agent &middot; '+d.notes.length+(d.notes.length==1?' note':' notes')+' to send &middot; '+calls+(calls==1?' person':' people')+' to call</p><p class="sub">Tap a button, check the text, hit send.</p>';
  if(d.test)h+='<p class="warn">Test page. The number 555-555-0123 is fake. Do not send.</p>';
  h+='<h2>Anniversary notes</h2>';
  d.notes.forEach(function(n){h+='<div class="card"><div class="name">'+esc(n.name)+'</div><div class="sub" style="margin:0">'+esc(n.why)+'</div><div class="note">'+esc(n.text)+'</div>'+
@@ -46,8 +46,8 @@ async function unlock(pin,raw){
  return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:iv},key,ct)));
 }
 var hash=location.hash.slice(1);
-if(!hash){app.innerHTML='<div class="pin"><h1>Monthly notes</h1><p class="sub">Open the link from your monthly email to see your notes.</p></div>'}else{
- app.innerHTML='<form class="pin" id="f"><h1>Your monthly notes</h1><p class="sub">Enter your 4-digit PIN</p><input id="p" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" autofocus><button type="submit">Open</button><div class="err" id="e"></div></form>';
+if(!hash){app.innerHTML='<div class="pin"><h1>Your Month</h1><p class="sub">Still Your Agent. Open the link from your monthly email to see your notes.</p></div>'}else{
+ app.innerHTML='<form class="pin" id="f"><h1>Your Month</h1><p class="sub">Enter your 4-digit PIN</p><input id="p" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" autofocus><button type="submit">Open</button><div class="err" id="e"></div></form>';
  document.getElementById('f').addEventListener('submit',async function(ev){
   ev.preventDefault();var e=document.getElementById('e');e.textContent='Opening...';
   try{render(await unlock(document.getElementById('p').value,b64(hash)))}catch(x){e.textContent='That PIN did not work. Check it and try again.'}
