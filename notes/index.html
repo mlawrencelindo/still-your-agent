@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Monthly notes</title>
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f6f7f9;color:#1d2330}
+main{max-width:560px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#5a6475;margin:0 0 20px}
+h2{font-size:16px;margin:28px 0 10px;text-transform:uppercase;letter-spacing:.04em;color:#5a6475}
+.card{background:#fff;border:1px solid #e1e4ea;border-radius:10px;padding:14px;margin-bottom:12px}
+.name{font-weight:600}.note{margin:8px 0 12px;line-height:1.45}
+a.btn,button{display:block;width:100%;box-sizing:border-box;text-align:center;background:#1a73e8;color:#fff;text-decoration:none;padding:13px;border:0;border-radius:8px;font-weight:600;font-size:16px;margin-top:8px}
+a.alt{background:#fff;color:#1a73e8;border:1px solid #1a73e8;font-weight:500}
+.test{font-size:13px;color:#5a6475;margin-top:10px}
+table{width:100%;border-collapse:collapse;background:#fff}td,th{border:1px solid #e1e4ea;padding:8px;text-align:left;font-size:14px}
+.warn{background:#fff6dd;border:1px solid #f0d58a;padding:10px;border-radius:8px;font-size:14px}
+.pin{max-width:280px;margin:60px auto 0;text-align:center}
+.pin input{width:100%;box-sizing:border-box;font-size:28px;letter-spacing:.5em;text-align:center;padding:12px;border:1px solid #c8cdd6;border-radius:8px}
+.err{color:#c5221f;min-height:20px;margin-top:10px;font-size:14px}
+</style></head><body><main id="app"></main>
+<script>
+var app=document.getElementById('app'),ios=/iPhone|iPad|iPod/.test(navigator.userAgent);
+var sample={agent:"Dana (SAMPLE)",month:"November 2026",test:true,
+ replies:[["Mike T.","Thinking of selling in spring","Call"],["Ana R.","Thanks for the update","No"]],
+ notes:[{name:"Sarah L.",why:"3 years on Maple Street",phone:"+15555550123",
+  text:"Hi Sarah! Can you believe it's been 3 years since you got the keys to your place on Maple Street? Happy home anniversary. Hope you're still loving it. - Dana"}]};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function link(p,t,sep){return "sms:"+p+sep+"body="+encodeURIComponent(t)}
+function render(d){
+ var h='<h1>'+esc(d.month)+' notes for '+esc(d.agent)+'</h1><p class="sub">Tap a button, check the text, hit send.</p>';
+ if(d.test)h+='<p class="warn">Test page. The number 555-555-0123 is fake. Do not send.</p>';
+ h+='<h2>Anniversary notes</h2>';
+ d.notes.forEach(function(n){h+='<div class="card"><div class="name">'+esc(n.name)+'</div><div class="sub" style="margin:0">'+esc(n.why)+'</div><div class="note">'+esc(n.text)+'</div>'+
+  '<a class="btn" href="'+link(n.phone,n.text,ios?'&':'?')+'">Text '+esc(n.name.split(' ')[0])+'</a>';
+  if(d.test)h+='<div class="test">Test versions:</div><a class="btn alt" href="'+link(n.phone,n.text,'?')+'">Version A</a><a class="btn alt" href="'+link(n.phone,n.text,'&')+'">Version B</a><a class="btn alt" href="'+link(n.phone,n.text,'?&')+'">Version C</a>';
+  h+='</div>'});
+ h+='<h2>Who replied</h2><table><tr><th>Name</th><th>What they said</th><th>Call?</th></tr>';
+ d.replies.forEach(function(r){h+='<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td></tr>'});
+ app.innerHTML=h+'</table>';
+}
+function b64(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
+async function unlock(pin,raw){
+ var salt=raw.slice(0,16),iv=raw.slice(16,28),ct=raw.slice(28);
+ var base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveKey']);
+ var key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:600000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+ return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:iv},key,ct)));
+}
+var hash=location.hash.slice(1);
+if(!hash){app.innerHTML='<div class="pin"><h1>Monthly notes</h1><p class="sub">Open the link from your monthly email to see your notes.</p></div>'}else{
+ app.innerHTML='<form class="pin" id="f"><h1>Your monthly notes</h1><p class="sub">Enter your 4-digit PIN</p><input id="p" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" autofocus><button type="submit">Open</button><div class="err" id="e"></div></form>';
+ document.getElementById('f').addEventListener('submit',async function(ev){
+  ev.preventDefault();var e=document.getElementById('e');e.textContent='Opening...';
+  try{render(await unlock(document.getElementById('p').value,b64(hash)))}catch(x){e.textContent='That PIN did not work. Check it and try again.'}
+ });
+}
+</script></body></html>
