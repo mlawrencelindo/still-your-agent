@@ -118,6 +118,20 @@
   .trust li { display: flex; align-items: center; gap: .5rem; font-size: .95rem; color: var(--ink); }
   .trust svg { flex: none; color: var(--navy); }
 
+  /* Hero photo with the note card over it */
+  .hero-visual { position: relative; margin: 0; padding-bottom: 4.5rem; }
+  .hero-photo { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; object-position: 40% 50%; border-radius: .85rem; box-shadow: 0 24px 50px -30px rgba(23, 32, 43, .55); }
+  .hero-visual .sample { position: absolute; left: -2.5rem; right: 2.5rem; bottom: 0; padding: 1.4rem 1.5rem; }
+  .hero-visual .note-body { font-size: 1.05rem; }
+
+  /* Wide photo band */
+  .photo-band { position: relative; padding: 0; min-height: clamp(18rem, 42vw, 30rem); display: flex; align-items: flex-end; color: #fff; overflow: hidden; }
+  .photo-band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+  .photo-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(22, 43, 71, .9) 0%, rgba(22, 43, 71, .7) 40%, rgba(22, 43, 71, .1) 75%), linear-gradient(180deg, rgba(22, 43, 71, 0) 50%, rgba(22, 43, 71, .5) 100%); }
+  .photo-band p { text-shadow: 0 2px 14px rgba(0, 0, 0, .3); }
+  .photo-band .wrap { position: relative; z-index: 1; width: 100%; padding-block: 2.5rem; }
+  .photo-band p { font-family: var(--serif); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.2; max-width: 24ch; }
+
   /* Sample cards */
   .sample {
     background: var(--paper);
@@ -148,7 +162,10 @@
   .video-sample { margin-top: 3.5rem; }
   .video-meta { font-size: .95rem; color: var(--muted); margin-bottom: 1.25rem; }
   .frames { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
-  .frame { aspect-ratio: 9 / 16; border-radius: .6rem; padding: 1rem; display: flex; flex-direction: column; color: #fff; background: linear-gradient(165deg, var(--navy) 0%, var(--navy-dark) 100%); overflow: hidden; }
+  .frame { position: relative; aspect-ratio: 9 / 16; border-radius: .6rem; padding: 1rem; display: flex; flex-direction: column; color: #fff; background: linear-gradient(165deg, var(--navy) 0%, var(--navy-dark) 100%); overflow: hidden; isolation: isolate; }
+  .frame-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .frame::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(22, 43, 71, .55) 0%, rgba(22, 43, 71, .15) 30%, rgba(22, 43, 71, .7) 62%, rgba(22, 43, 71, .94) 100%); }
+  .frame > span { text-shadow: 0 1px 8px rgba(0, 0, 0, .35); }
   .frame-time { font: 600 .7rem/1 var(--sans); letter-spacing: .06em; color: rgba(255, 255, 255, .78); font-variant-numeric: tabular-nums; }
   .frame-kicker { margin-top: auto; font: 600 .7rem/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .8); }
   .frame-big { margin-top: .4rem; font-family: var(--serif); font-weight: 600; font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.2; }
@@ -312,6 +329,8 @@
   .copied { min-height: 1.4em; margin-top: .9rem; font-size: .875rem; color: var(--navy); }
 
   footer { padding-block: 2.5rem; font-size: .875rem; color: var(--muted); }
+  .credits { margin-top: 1rem; font-size: .75rem; line-height: 1.5; flex-basis: 100%; }
+  .credits a { color: var(--muted); }
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
 
   /* Reveal on scroll */
@@ -335,7 +354,9 @@
   @media (max-width: 900px) {
     section { padding-block: 4.25rem; }
     .hero-grid, .monthly-grid, .start-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .hero .sample { max-width: 32rem; }
+    .hero-visual { max-width: 32rem; }
+    .hero-visual .sample { left: 1.25rem; right: -1rem; }
+    .hero-photo { aspect-ratio: 4 / 3.4; }
     .monthly-side { position: static; max-width: 32rem; }
     .steps { grid-template-columns: 1fr 1fr; gap: 2.25rem 1.5rem; }
     .step::after { display: none; }
@@ -362,6 +383,8 @@
     .frames { grid-template-columns: 1fr 1fr; gap: .75rem; }
     .frame { padding: .85rem; }
     .frame-big { font-size: 1.05rem; }
+    .hero-visual .sample { left: .75rem; right: .75rem; }
+    .hero-visual { padding-bottom: 7rem; }
   }
 </style>
 </head>
@@ -404,17 +427,20 @@
         </ul>
       </div>
 
-      <figure class="sample tilt-l reveal d1" style="margin:0" aria-label="Sample anniversary note">
-        <div class="sample-head">
-          <span class="sample-title">Anniversary note</span>
-          <span class="tag">Sample</span>
-        </div>
-        <p class="note-body">Hi Dana, three years ago this week you got the keys to the Maple Street house. Hope the garden finally came in the way you wanted. If you ever want to know what it's worth now, I'm happy to pull the numbers.</p>
-        <p class="note-foot">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
-          Sent by you, from your phone
-        </p>
-      </figure>
+      <div class="hero-visual reveal d1">
+        <img class="hero-photo" src="assets/web/ferry.jpg" alt="Two craftsman houses with stone porches on a sunny street" width="1400" height="1001" fetchpriority="high">
+        <figure class="sample tilt-l" style="margin:0" aria-label="Sample anniversary note">
+          <div class="sample-head">
+            <span class="sample-title">Anniversary note</span>
+            <span class="tag">Sample</span>
+          </div>
+          <p class="note-body">Hi Dana, three years ago this week you got the keys to the Maple Street house. Hope the garden finally came in the way you wanted. If you ever want to know what it's worth now, I'm happy to pull the numbers.</p>
+          <p class="note-foot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            Sent by you, from your phone
+          </p>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -434,6 +460,13 @@
       </div>
       <p class="gap-close reveal">The usual reason is simple: the client lost touch, and another agent was there first.</p>
       <p class="source reveal">Source: NAR 2025 Profile of Home Buyers and Sellers, as summarized by <a href="https://virginiarealtors.org/2025/12/08/key-takeaways-from-nars-2025-profile-of-home-buyers-and-sellers">Virginia Realtors</a>. Reported figures for repeat use vary between 15% and 18%.</p>
+    </div>
+  </section>
+
+  <section class="photo-band" aria-label="A street of homes">
+    <img src="assets/web/almeda-wide.jpg" alt="A brick house behind a hedge on a sunny autumn street" width="1800" height="1202" loading="lazy">
+    <div class="wrap">
+      <p class="reveal">Every home you sold is still on that street. So is the client who trusted you with it.</p>
     </div>
   </section>
 
@@ -518,12 +551,14 @@
         <p class="video-meta">60 seconds, vertical, made for Reels, Shorts, and texting to your list.</p>
         <ol class="frames">
           <li class="frame">
+            <img class="frame-bg" src="assets/web/avenue.jpg" alt="" loading="lazy">
             <span class="frame-time">0:00</span>
             <span class="frame-kicker">Maple Grove &middot; Fall market</span>
             <span class="frame-big">Homes here are selling a week faster.</span>
             <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty</span>
           </li>
           <li class="frame">
+            <img class="frame-bg" src="assets/web/street.jpg" alt="" loading="lazy">
             <span class="frame-time">0:12</span>
             <span class="frame-kicker">Days on market</span>
             <span class="frame-num">24</span>
@@ -531,6 +566,7 @@
             <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty</span>
           </li>
           <li class="frame">
+            <img class="frame-bg" src="assets/web/porch.jpg" alt="" loading="lazy">
             <span class="frame-time">0:30</span>
             <span class="frame-kicker">Median sale price</span>
             <span class="frame-num">$412K</span>
@@ -538,6 +574,7 @@
             <span class="frame-sig">Sarah Kim, REALTOR&reg;<br>Maple Grove Realty</span>
           </li>
           <li class="frame">
+            <img class="frame-bg" src="assets/web/craftsman.jpg" alt="" loading="lazy">
             <span class="frame-time">0:50</span>
             <span class="frame-kicker">Your home</span>
             <span class="frame-big">Wondering what yours is worth now? Text me.</span>
@@ -740,6 +777,7 @@
   <div class="wrap">
     <span>Still Your Agent. Past-client follow-up for solo real estate agents.</span>
     <span>Samples on this page use made-up names.</span>
+    <p class="credits">Photos: <a href="https://commons.wikimedia.org/w/index.php?curid=89988234">West Ferry Street, Buffalo</a> and <a href="https://commons.wikimedia.org/w/index.php?curid=128818972">Thatcher Avenue, Buffalo</a> and <a href="https://commons.wikimedia.org/w/index.php?curid=119546218">Zwetsch-Payne-Clarke House</a> by Andre Carrotflower, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. <a href="https://commons.wikimedia.org/w/index.php?curid=113404822">Autumn in Windsor Farms</a> by Will Fisher, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>. <a href="https://commons.wikimedia.org/wiki/File:Almeda_neighborhood,_Portland_-_DPLA_-_5032d350524680f1f520b0bd2be1be1a.jpg">Almeda neighborhood, Portland</a> by Gary Halvorson, Oregon State Archives, <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a>. <a href="https://commons.wikimedia.org/wiki/File:Front_Porch,_Redlands,_Ca_(5888329515).jpg">Front Porch, Redlands</a> by inkknife_2000, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>. All via Wikimedia Commons, resized.</p>
   </div>
 </footer>
 
